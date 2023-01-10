@@ -14,6 +14,8 @@ public class RabbitMQConfig {
     private String queue;
     @Value("${rabbitmq.exchange.name}")
     private String exchange;
+    @Value("${rabbitmq.key.name}")
+    private String routingKey;
 
     // spring bean for RabbitMQ Queue
     @Bean
@@ -29,10 +31,14 @@ public class RabbitMQConfig {
 
     //Binding between queue and exchange using routing key
 
-@Bean
-    public Binding binding(){
+    @Bean
+    public Binding binding() {
         return BindingBuilder.bind(queue())
                 .to(exchange())
-                .with("rabbitmq_demo_routing_key");
+                .with(routingKey);
     }
+
+    // Connection Factory
+    // RabbitTemplate
+    // RabbitAdmin
 }
